@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Radio implements iRadio {
@@ -91,10 +90,10 @@ public class Radio implements iRadio {
         if((posicion >0) && (posicion <= NUMERO_FAVORITOS)){
             if(esFm){
                 frecuenciaFmActual = favoritos.get(posicion).getFM();
-                return double frecuenciaFmActual;
+                return frecuenciaFmActual;
             }else{
                 frecuenciaAmActual = favoritos.get(posicion).getAM();
-                return double frecuenciaAmActual;
+                return frecuenciaAmActual;
             }
         }else{
             System.out.println("Solo existen los espacios 1 a "+String.valueOf(NUMERO_FAVORITOS)+"!");

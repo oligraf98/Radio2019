@@ -6,7 +6,6 @@ public class Main {
         Scanner input = new Scanner(System.in);
         String opcion1;
         boolean in = true;
-        boolean on = false;
         do{
             System.out.println(radio.estadoActual());
             System.out.println("");
@@ -67,5 +66,6 @@ public class Main {
             }
 
         }while(in);
+        input.close();
     }
 }
