@@ -5,12 +5,12 @@ public class Main {
         Radio radio = new Radio();
         Scanner input = new Scanner(System.in);
         String opcion1;
-        Boolean in = true;
-        Boolean on = false;
+        boolean in = true;
+        boolean on = false;
         do{
             System.out.println(radio.estadoActual());
             System.out.println("");
-            System.out.println(radio.menu());
+            System.out.println("¿Cual de las siguientes acciones desea tomar?\nIngrese el numero de la opcion que quiere(1-6)\n\t1.Incrementar frecuencia\n\t2.Disminuir frecuencia\n\t3.Guardar estacion en favoritos\n\t4.Ir a favoritos\n\t5.Cambiar Fm/Am\n\t6.Encender o apagar la radio\n\t7.Salir del programa ");
             opcion1 = input.nextLine();
 
             switch (opcion1){

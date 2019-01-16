@@ -3,48 +3,34 @@ import java.util.ArrayList;
 
 public class Radio implements iRadio {
 
-    private Boolean encendido = false;
-    private Boolean esFm = true;
+    private boolean encendido = false;
+    private boolean esFm = true;
     private double frecuenciaFmActual = 97.7;
     private int frecuenciaAmActual = 1000;
     private ArrayList<Estacion> favoritos = new ArrayList<Estacion>();
 
     public Radio(){
-        this.favoritos.add(new Estacion(97.5, 1000));
-        this.favoritos.add(new Estacion(97.5, 1000));
-        this.favoritos.add(new Estacion(97.5, 1000));
-        this.favoritos.add(new Estacion(97.5, 1000));
-        this.favoritos.add(new Estacion(97.5, 1000));
-        this.favoritos.add(new Estacion(97.5, 1000));
-        this.favoritos.add(new Estacion(97.5, 1000));
-        this.favoritos.add(new Estacion(97.5, 1000));
-        this.favoritos.add(new Estacion(97.5, 1000));
-        this.favoritos.add(new Estacion(97.5, 1000));
-        this.favoritos.add(new Estacion(97.5, 1000));
-        this.favoritos.add(new Estacion(97.5, 1000));
+    	for(int i = 0; i < NUMERO_FAVORITOS; i++) {
+            this.favoritos.add(new Estacion(97.5, 1000));
+    	}
     }
 
-    private static double LIMITE_INFERIORFM = 87.9;
-    private static double LIMITE_SUPERIORFM = 107.9;
-    private static int LIMITE_INFERIORAM = 530;
-    private static int LIMITE_SUPERIORAM = 1610;
-    private static double INCREMENTOFM = 0.2;
-    private static int INCREMENTOAM = 10;
+    private static double 	LIMITE_INFERIORFM 	= 87.9;
+    private static double 	LIMITE_SUPERIORFM 	= 107.9;
+    private static double 	INCREMENTOFM 		= 0.2;
+    private static int 		LIMITE_INFERIORAM 	= 530;
+    private static int 		LIMITE_SUPERIORAM 	= 1610;
+    private static int 		INCREMENTOAM 		= 10;
+    private static int 		NUMERO_FAVORITOS 	= 12;
 
-    public Boolean isOn(){
+    public boolean isOn(){
         return encendido;
     }
 
     @Override
     public boolean encendidoRadio() {
-
         encendido = !encendido;
-
-        return false;
-    }
-
-    public String menu(){
-        return "¿Cual de las siguientes acciones desea tomar?\nIngrese el numero de la opcion que quiere(1-6)\n\t1.Incrementar frecuencia\n\t2.Disminuir frecuencia\n\t3.Guardar estacion en favoritos\n\t4.Ir a favoritos\n\t5.Cambiar Fm/Am\n\t6.Encender o apagar la radio\n\t7.Salir del programa ";
+        return encendido;
     }
 
     public String estadoActual(){
@@ -65,61 +51,60 @@ public class Radio implements iRadio {
             frec = "Radio apagada";
             onoff = "Radio apagada";
         }
-
-
         String r = "Estado actual de la radio:\n\tEstacion: "+frec+"\n\tFm/Am: "+sint+"\n\tEncendido/Apagado: "+onoff;
         return r;
     }
 
     @Override
     public double subirFrecuencia() {
-
         if (esFm){
             frecuenciaFmActual = Math.min(frecuenciaFmActual+=INCREMENTOFM, LIMITE_SUPERIORFM);
-
+            return frecuenciaFmActual;
         }else{
             frecuenciaAmActual = Math.min(frecuenciaAmActual += INCREMENTOAM, LIMITE_SUPERIORAM);
+            return frecuenciaAmActual;
         }
-        return 0;
     }
 
     @Override
     public double bajarFrecuencia() {
         if (esFm){
             frecuenciaFmActual = Math.max(frecuenciaFmActual -= INCREMENTOFM, LIMITE_INFERIORFM);
+            return frecuenciaFmActual;
         }else{
             frecuenciaAmActual = Math.max(frecuenciaAmActual -= INCREMENTOAM, LIMITE_INFERIORAM);
+            return frecuenciaAmActual;
         }
-        return 0;
     }
 
     @Override
     public void setFavorito(int posicion) {
-        if(posicion >0 && posicion <13){
+        if(posicion >0 && posicion <= NUMERO_FAVORITOS){
             favoritos.set(posicion, new Estacion(frecuenciaFmActual, frecuenciaAmActual));
         }else{
-            System.out.println("Solo existen los espacios 1 a 12!");
+            System.out.println("Solo existen los espacios 1 a "+String.valueOf(NUMERO_FAVORITOS)+"!");
         }
     }
 
     @Override
     public double getFavorito(int posicion) {
-        if(posicion >0 && posicion <13){
+        if((posicion >0) && (posicion <= NUMERO_FAVORITOS)){
             if(esFm){
                 frecuenciaFmActual = favoritos.get(posicion).getFM();
-
+                return double frecuenciaFmActual;
             }else{
                 frecuenciaAmActual = favoritos.get(posicion).getAM();
+                return double frecuenciaAmActual;
             }
         }else{
-            System.out.println("Solo existen los espacios 1 a 12!");
+            System.out.println("Solo existen los espacios 1 a "+String.valueOf(NUMERO_FAVORITOS)+"!");
+            return 0;
         }
-        return 0;
     }
 
     @Override
     public boolean cambiarAmFm() {
         esFm = !esFm;
-        return false;
+        return esFm;
     }
 }

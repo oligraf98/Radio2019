@@ -7,11 +7,15 @@ public class Estacion {
         this.frecuenciaFm = fF;
         this.frecuenciaAm = fA;
     }
-
+    /**
+     * Metodo para obtener la frecuencia FM guardada 
+     */
     public double getFM(){
         return frecuenciaFm;
     }
-
+    /**
+     * Metodo para obtener la frecuencia AM guardada 
+     */
     public int getAM(){
        return frecuenciaAm;
     }
