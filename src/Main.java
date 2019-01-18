@@ -7,7 +7,7 @@ public class Main {
         String opcion1;
         boolean in = true;
         boolean encendido = false;
-        String sintonia = "FM";
+
         do{
             System.out.println("");
             System.out.println("¿Cual de las siguientes acciones desea tomar?\nIngrese el numero de la opcion que quiere(1-6)\n\t1.Incrementar frecuencia\n\t2.Disminuir frecuencia\n\t3.Guardar estacion en favoritos\n\t4.Ir a favoritos\n\t5.Cambiar Fm/Am\n\t6.Encender o apagar la radio\n\t7.Salir del programa ");
@@ -18,14 +18,27 @@ public class Main {
                     if(!encendido){
                         System.out.println("Por favor encienda la radio antes de usarla.");
                     }else{
-                        System.out.println("Estacion seleccionada: "+String.format("%.1f",radio.subirFrecuencia())+sintonia);
+                        double frec = radio.subirFrecuencia();
+                        if(frec > 200){
+                            System.out.println("Estacion seleccionada: "+String.format("%.1f",frec)+"AM");
+                        }
+                        else {
+                            System.out.println("Estacion seleccionada: "+String.format("%.1f",frec)+"FM");
+                        }
+
                     }
                     break;
                 case"2":
                     if(!encendido){
                         System.out.println("Por favor encienda la radio antes de usarla.");
                     }else{
-                        System.out.println("Estacion seleccionada: "+String.format("%.1f",radio.bajarFrecuencia())+sintonia);
+                        double frec = radio.bajarFrecuencia();
+                        if(frec > 200){
+                            System.out.println("Estacion seleccionada: "+String.format("%.1f",frec)+"AM");
+                        }
+                        else {
+                            System.out.println("Estacion seleccionada: "+String.format("%.1f",frec)+"FM");
+                        }
                     }
                     break;
                 case"3":
@@ -34,8 +47,12 @@ public class Main {
                     }else{
                         System.out.println("Elija en que numero quiere guardar la estacion actual (1-12)");
                         String elNum = input.nextLine();
-                        radio.setFavorito(Integer.parseInt(elNum));
-                        System.out.println("Se guardo la estacion actual");
+                        if(Integer.parseInt(elNum) >0 && Integer.parseInt(elNum) <= 12) {
+                            radio.setFavorito(Integer.parseInt(elNum));
+                            System.out.println("Se guardo la estacion actual");
+                        }else{
+                            System.out.println("Solo existen 12 estaciones!");
+                        }
                     }
                     break;
                 case"4":
@@ -44,20 +61,30 @@ public class Main {
                     }else{
                         System.out.println("Elija el numero de estacion (1-12)");
                         String elNum = input.nextLine();
-                        System.out.println("Estacion seleccionada: "+String.format("%.1f",radio.getFavorito(Integer.parseInt(elNum)))+sintonia);
+                        if(Integer.parseInt(elNum) >0 && Integer.parseInt(elNum) <= 12) {
+                            double frec = radio.getFavorito(Integer.parseInt(elNum));
+                            if (frec > 200) {
+                                System.out.println("Estacion seleccionada: " + String.format("%.1f", frec) + "AM");
+                            } else {
+                                System.out.println("Estacion seleccionada: " + String.format("%.1f", frec) + "FM");
+                            }
+                        }else{
+                            System.out.println("Solo existen 12 estaciones!");
+                        }
                     }
                     break;
                 case"5":
                     if(!encendido){
                         System.out.println("Por favor encienda la radio antes de usarla.");
                     }else{
-                        if(radio.cambiarAmFm()){
-                        	sintonia = "FM";
+                        radio.cambiarAmFm();
+                        double frec = radio.getFavorito(1);
+                        if(frec > 200){
+                            System.out.println("Se cambio a sintonia AM");
                         }
                         else{
-                        	sintonia = "AM";
-                        };
-                        System.out.println("Se cambio a sintonia "+sintonia);
+                            System.out.println("Se cambio a sintonia FM");
+                        }
                     }
                     break;
                 case"6":

@@ -5,12 +5,15 @@ public class Radio implements iRadio {
     private boolean encendido = false;
     private boolean esFm = true;
     private double frecuenciaFmActual = 97.7;
-    private int frecuenciaAmActual = 1000;
-    private ArrayList<Estacion> favoritos = new ArrayList<Estacion>();
+    private double frecuenciaAmActual = 1000;
+//    private ArrayList<Estacion> favoritos = new ArrayList<Estacion>();
+    private double [] favoritosFM = new double[12];
+    private double[] favoritosAM = new double[12];
 
     public Radio(){
     	for(int i = 0; i < NUMERO_FAVORITOS; i++) {
-            this.favoritos.add(new Estacion(97.5, 1000));
+            this.favoritosAM[i] = 1000;
+            this.favoritosFM[i] = 97.7;
     	}
     }
 
@@ -78,27 +81,20 @@ public class Radio implements iRadio {
 
     @Override
     public void setFavorito(int posicion) {
-        if(posicion >0 && posicion <= NUMERO_FAVORITOS){
-            favoritos.set(posicion, new Estacion(frecuenciaFmActual, frecuenciaAmActual));
-        }else{
-            System.out.println("Solo existen los espacios 1 a "+String.valueOf(NUMERO_FAVORITOS)+"!");
-        }
+        favoritosFM[posicion - 1] = frecuenciaFmActual;
+        favoritosAM[posicion - 1] = frecuenciaAmActual;
     }
 
     @Override
     public double getFavorito(int posicion) {
-        if((posicion >0) && (posicion <= NUMERO_FAVORITOS)){
             if(esFm){
-                frecuenciaFmActual = favoritos.get(posicion).getFM();
+                frecuenciaFmActual = favoritosFM[posicion-1];
                 return frecuenciaFmActual;
             }else{
-                frecuenciaAmActual = favoritos.get(posicion).getAM();
+                frecuenciaAmActual = favoritosAM[posicion-1];
                 return frecuenciaAmActual;
             }
-        }else{
-            System.out.println("Solo existen los espacios 1 a "+String.valueOf(NUMERO_FAVORITOS)+"!");
-            return 0;
-        }
+
     }
 
     @Override
